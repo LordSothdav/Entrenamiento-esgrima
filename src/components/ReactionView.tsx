@@ -5,7 +5,6 @@ import {
   Square,
   Zap,
   Clock,
-  Sliders,
   Hash,
   Layers,
   ArrowRight,
@@ -61,7 +60,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
   const [reactionsCount, setReactionsCount] = useState<number>(0);
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
   const [customInputText, setCustomInputText] = useState<string>(settings.customNumbersText || '1, 2, 3, 4');
-  const [showConfig, setShowConfig] = useState<boolean>(false);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const lastSignalRef = useRef<string | null>(null);
@@ -303,27 +301,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-8.5rem)] justify-between pb-4">
-      {/* Top Banner / Description */}
-      <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-3.5 mb-2 flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-black text-white flex items-center gap-2">
-            <Zap className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-            Entrenamiento de Plastron
-          </h2>
-          <p className="text-xs text-zinc-400">
-            Voz del árbitro FIE • Combinaciones de toques y fintas • Solo voz
-          </p>
-        </div>
-        {reactionState === 'idle' && (
-          <button
-            onClick={() => setShowConfig(!showConfig)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-xs font-semibold text-zinc-200 border border-zinc-800 transition cursor-pointer"
-          >
-            <Sliders className="w-3.5 h-3.5 text-cyan-400" />
-            {showConfig ? 'Ocultar' : 'Ajustar'}
-          </button>
-        )}
-      </div>
 
       {/* Configuration Drawer (When in idle) */}
       {reactionState === 'idle' && (
