@@ -67,6 +67,7 @@ jobs:
         with:
           tag_name: latest
           name: "Esgrima Footwork - Última Versión APK"
+          make_latest: true
           body: |
             ### 🤺 Esgrima Footwork para Android
             
