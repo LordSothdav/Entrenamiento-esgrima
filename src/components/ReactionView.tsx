@@ -307,7 +307,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
   const maxSec = (settings.maxDelayMs / 1000).toFixed(1);
 
   return (
-    <div className={`flex flex-col justify-between ${reactionState === 'idle' ? 'min-h-[calc(100vh-8.5rem)] pb-24' : 'h-[calc(100dvh-5.2rem)] pb-safe overflow-hidden'}`}>
+    <div className={`flex flex-col justify-between ${reactionState === 'idle' ? 'min-h-[calc(100vh-8.5rem)] pb-24' : 'h-full flex-1 overflow-hidden'}`}>
 
       {/* Configuration Drawer (When in idle) */}
       {reactionState === 'idle' && (
@@ -556,7 +556,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
               Entrenamiento de Plastron
             </h3>
             <p className="text-xs text-zinc-400 mb-6 max-w-xs leading-relaxed">
-              El árbitro FIE cantará{' '}
+              Cantará{' '}
               <strong className="text-yellow-400">
                 {plastronMode === 'mixed' && 'dianas, combinaciones rápidas y fintas'}
                 {plastronMode === 'combinations' && 'combinaciones rápidas de 2 o 3 números'}
@@ -609,7 +609,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
             {/* Stage Visual */}
             <div className="my-auto flex flex-col items-center justify-center w-full">
               {!currentSignal && (
-                <div className="text-2xl font-bold text-zinc-400">Escuchando al árbitro...</div>
+                <div className="text-2xl font-bold text-zinc-400">Escuchando órdenes...</div>
               )}
 
               {/* 1. Single target visual */}

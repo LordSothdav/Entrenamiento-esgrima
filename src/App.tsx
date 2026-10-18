@@ -123,15 +123,17 @@ export default function App() {
 
       {/* Main Mobile App Container: full screen width & height on all devices */}
       <div className="w-full flex-1 flex flex-col min-h-screen relative bg-black pl-safe pr-safe">
-        {/* Mobile Header Bar */}
-        <Navbar
-          soundEnabled={soundEnabled}
-          onToggleSound={handleToggleSound}
-          onOpenHelp={() => handleSelectTab('help')}
-        />
+        {/* Mobile Header Bar (Hidden during active exercise like BottomNav) */}
+        {!isExerciseActive && (
+          <Navbar
+            soundEnabled={soundEnabled}
+            onToggleSound={handleToggleSound}
+            onOpenHelp={() => handleSelectTab('help')}
+          />
+        )}
 
         {/* Dynamic Tab Body */}
-        <main className={`flex-1 px-3.5 pt-2 ${isExerciseActive ? 'flex flex-col overflow-hidden pb-safe' : ''}`}>
+        <main className={`flex-1 px-3.5 ${isExerciseActive ? 'pt-safe pb-safe flex flex-col h-[100dvh] overflow-hidden' : 'pt-2'}`}>
           {currentTab === 'workout' && (
             <WorkoutView
               actions={actions}

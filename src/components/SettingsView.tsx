@@ -48,7 +48,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <div>
           <h2 className="text-base font-bold text-white flex items-center gap-2">
             <Settings className="w-4 h-4 text-rose-400 fill-rose-400" />
-            Ajustes de Movimientos de pie
+            Ajustes de Movimientos
           </h2>
           <p className="text-xs text-zinc-400">Pista, Modo Asalto FIE, ritmo aleatorio y voz de árbitro</p>
         </div>

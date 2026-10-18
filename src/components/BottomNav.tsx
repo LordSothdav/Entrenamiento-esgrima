@@ -17,7 +17,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   const tabs: { id: NavTab; label: string; icon: React.ReactNode; color: string }[] = [
     {
       id: 'workout',
-      label: 'Movimientos de pie',
+      label: 'Movimientos',
       icon: <Play className={`w-5 h-5 text-emerald-400 fill-emerald-400 ${isWorkoutRunning ? 'animate-pulse' : ''}`} />,
       color: 'text-emerald-400',
     },

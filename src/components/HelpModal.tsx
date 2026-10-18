@@ -73,7 +73,7 @@ export const HelpModal: React.FC = () => {
           Modo Asalto Oficial FIE (3m combate + 1m descanso)
         </h3>
         <p className="text-xs text-zinc-300 leading-relaxed">
-          En <strong>Movimientos de pie</strong> puedes activar el <em>Modo Asalto FIE</em>:
+          En <strong>Movimientos</strong> puedes activar el <em>Modo Asalto FIE</em>:
         </p>
         <ul className="space-y-1 text-xs text-zinc-300 pl-4 list-disc">
           <li>Temporizador reglamentario de <strong>3 minutos de combate continuo</strong>.</li>

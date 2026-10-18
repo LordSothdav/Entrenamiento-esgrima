@@ -426,7 +426,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
   const theme = getActionTheme(currentAction);
 
   return (
-    <div className={`flex flex-col justify-between ${workoutState === 'idle' ? 'min-h-[calc(100vh-8.5rem)] pb-24' : 'h-[calc(100dvh-5.2rem)] pb-safe overflow-hidden'}`}>
+    <div className={`flex flex-col justify-between ${workoutState === 'idle' ? 'min-h-[calc(100vh-8.5rem)] pb-24' : 'h-full flex-1 overflow-hidden'}`}>
       {/* Top Strip Position Bar */}
       <div className="pt-2">
         <StripPositionBar
@@ -502,7 +502,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
             </div>
             <div>
               <h2 className="text-2xl font-black text-white tracking-tight mb-1">
-                Movimientos de pie
+                Movimientos
               </h2>
               <p className="text-xs text-zinc-400 leading-relaxed">
                 Pista: <strong className="text-zinc-200">{settings.workoutSpaceMeters}m</strong> • Ritmo:{' '}
