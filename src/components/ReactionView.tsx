@@ -562,9 +562,9 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
       )}
 
       {/* Main Action Display Stage */}
-      <div className="flex-1 flex flex-col justify-center items-center my-2 relative">
+      <div className="flex-1 flex flex-col justify-center items-center my-2 relative w-full">
         {reactionState === 'idle' && (
-          <div className="w-full max-w-sm flex flex-col items-center text-center p-6 rounded-3xl bg-zinc-950 border border-zinc-900 shadow-2xl">
+          <div className="w-full max-w-md flex flex-col items-center text-center p-6 rounded-3xl bg-zinc-950 border border-zinc-900 shadow-2xl">
             <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-yellow-500 to-amber-600 flex items-center justify-center shadow-2xl shadow-yellow-950 mb-4">
               <Zap className="w-10 h-10 text-black fill-current" />
             </div>
@@ -592,7 +592,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
         )}
 
         {reactionState === 'countdown' && (
-          <div className="w-full max-w-sm flex flex-col items-center justify-center py-12 rounded-3xl bg-zinc-950 border border-yellow-500/30 shadow-2xl animate-pulse text-center">
+          <div className="w-full max-w-md flex flex-col items-center justify-center py-12 rounded-3xl bg-zinc-950 border border-yellow-500/30 shadow-2xl animate-pulse text-center">
             <span className="text-xs font-bold text-yellow-400 tracking-widest uppercase mb-2">
               ¡Preparado!
             </span>

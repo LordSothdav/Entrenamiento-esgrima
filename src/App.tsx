@@ -121,8 +121,8 @@ export default function App() {
       {/* Offline Status Toast */}
       <OfflineIndicator />
 
-      {/* Main Mobile App Container with sleek midnight dark borders */}
-      <div className="w-full max-w-md mx-auto flex-1 flex flex-col min-h-screen relative shadow-2xl bg-black border-x border-zinc-900">
+      {/* Main Mobile App Container: full screen width & height on all devices */}
+      <div className="w-full flex-1 flex flex-col min-h-screen relative bg-black pl-safe pr-safe">
         {/* Mobile Header Bar */}
         <Navbar
           soundEnabled={soundEnabled}

@@ -487,9 +487,9 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
       )}
 
       {/* Main Interactive Stage */}
-      <div className="flex-1 flex flex-col justify-center items-center my-3 relative">
+      <div className="flex-1 flex flex-col justify-center items-center my-2 relative w-full">
         {workoutState === 'idle' && (
-          <div className="w-full max-w-sm flex flex-col items-center text-center p-6 rounded-3xl bg-zinc-950 border border-zinc-900 shadow-2xl space-y-4">
+          <div className="w-full max-w-md flex flex-col items-center text-center p-5 sm:p-6 rounded-3xl bg-zinc-950 border border-zinc-900 shadow-2xl space-y-4">
             <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center shadow-2xl shadow-emerald-950 mb-1">
               <Play className="w-8 h-8 text-black fill-current" />
             </div>
@@ -618,7 +618,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
         )}
 
         {workoutState === 'countdown' && (
-          <div className="w-full max-w-sm flex flex-col items-center justify-center py-12 rounded-3xl bg-zinc-950 border border-emerald-500/30 shadow-2xl animate-pulse">
+          <div className="w-full max-w-md flex flex-col items-center justify-center py-12 rounded-3xl bg-zinc-950 border border-emerald-500/30 shadow-2xl animate-pulse">
             <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase mb-2">
               ¡Ponte en guardia!
             </span>
@@ -633,7 +633,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
 
         {/* 1-Minute Official Bout Rest Screen */}
         {workoutState === 'bout_rest' && (
-          <div className="w-full max-w-sm flex flex-col items-center text-center p-8 rounded-3xl bg-zinc-950 border-2 border-amber-500/80 shadow-2xl shadow-amber-950/60 animate-in fade-in zoom-in-95">
+          <div className="w-full max-w-md flex flex-col items-center text-center p-8 rounded-3xl bg-zinc-950 border-2 border-amber-500/80 shadow-2xl shadow-amber-950/60 animate-in fade-in zoom-in-95">
             <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-400 mb-3 shadow-lg">
               <Coffee className="w-8 h-8" />
             </div>

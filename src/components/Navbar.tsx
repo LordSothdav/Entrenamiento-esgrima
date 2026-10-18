@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ soundEnabled, onToggleSound, onO
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-zinc-900 px-4 py-3 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-zinc-900 px-4 py-3 pt-safe flex items-center justify-between">
       <div className="flex items-center gap-2.5">
         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-900 flex items-center justify-center text-white shadow-md shadow-blue-950">
           <Swords className="w-5 h-5 text-yellow-300 transform -rotate-12" />
