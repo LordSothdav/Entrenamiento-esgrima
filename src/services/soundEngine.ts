@@ -1,6 +1,5 @@
 // Web Audio API Synthesizer for Fencing Footwork
 // 100% offline, zero network latency, immediate response on mobile devices
-
 class SoundEngine {
   private ctx: AudioContext | null = null;
   private volume: number = 0.8;
@@ -34,7 +33,6 @@ class SoundEngine {
     try {
       const ctx = this.getContext();
       if (!ctx) return;
-
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -78,28 +76,23 @@ class SoundEngine {
       case 'advance':
         this.playTone(950, 0.12, 'sine');
         break;
-
       case 'beep-high-3':
       case 'double_advance':
         this.playTone(950, 0.08, 'sine');
         setTimeout(() => this.playTone(1100, 0.1, 'sine'), 100);
         break;
-
       case 'beep-high-6':
       case 'quick_advance':
         this.playTone(1200, 0.09, 'sine');
         break;
-
       case 'retreat':
       case 'low-linear-1':
         this.playTone(380, 0.15, 'sine');
         break;
-
       case 'double_retreat':
         this.playTone(380, 0.09, 'sine');
         setTimeout(() => this.playTone(320, 0.12, 'sine'), 100);
         break;
-
       case 'lunge':
       case 'beep-shreek-1':
         // Piercing athletic attack sound
@@ -119,15 +112,12 @@ class SoundEngine {
           this.playTone(1200, 0.25, 'triangle');
         }
         break;
-
       case 'recover':
         this.playTone(520, 0.16, 'sine');
         break;
-
       case 'beep-medium-2':
         this.playTone(650, 0.14, 'triangle');
         break;
-
       case 'piston':
       case 'balestra':
         // Percussive stomp/appel sound
@@ -147,7 +137,6 @@ class SoundEngine {
           this.playTone(220, 0.1, 'triangle');
         }
         break;
-
       case 'low-linear-reverse-1':
         try {
           const osc = ctx.createOscillator();
@@ -165,11 +154,9 @@ class SoundEngine {
           this.playTone(400, 0.15, 'sine');
         }
         break;
-
       case 'workout_complete':
         this.playFanfare();
         break;
-
       default:
         this.playTone(700, 0.12, 'sine');
         break;

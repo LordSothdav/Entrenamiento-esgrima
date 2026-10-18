@@ -480,11 +480,8 @@ export const DEFAULT_UI_STATE: AppUIState = {
   currentTab: 'workout',
 };
 
-// Normalize and migrate old names if found in storage
 function migrateAction(a: FootworkAction): FootworkAction {
   let updated = { ...a };
-
-  // 1. Pisoton -> Balestra
   if (
     updated.id === 'pisoton' ||
     updated.name?.toLowerCase().includes('pisoton') ||
@@ -497,8 +494,6 @@ function migrateAction(a: FootworkAction): FootworkAction {
     updated.voiceText = '¡Balestra!';
     updated.description = 'Balestra de esgrima: salto rasante hacia adelante aterrizando en guardia.';
   }
-
-  // 2. avance marcha -> paso adelante
   if (
     updated.name?.toLowerCase().includes('avance marcha') ||
     updated.displayName?.toLowerCase().includes('avance marcha')
@@ -508,8 +503,6 @@ function migrateAction(a: FootworkAction): FootworkAction {
     updated.displayName = 'Marcha, paso adelante, marcha';
     updated.voiceText = '¡Marcha, paso adelante, marcha!';
   }
-
-  // 3. avance atras -> paso atrás
   if (
     updated.name?.toLowerCase().includes('avance atras') ||
     updated.displayName?.toLowerCase().includes('avance atras') ||
@@ -521,7 +514,6 @@ function migrateAction(a: FootworkAction): FootworkAction {
     updated.displayName = 'Romper, paso atrás, romper';
     updated.voiceText = '¡Romper, paso atrás, romper!';
   }
-
   return updated;
 }
 
@@ -569,9 +561,9 @@ export function loadSavedSettings(): WorkoutSettings {
     return {
       ...DEFAULT_SETTINGS,
       ...parsed,
-      audioMode: 'voice', // Enforce voice only
-      soundVolume: 1.0, // Enforce 100% volume
-      speechPitch: 1.0, // Official referee pitch
+      audioMode: 'voice',
+      soundVolume: 1.0,
+      speechPitch: 1.0,
       minDelayMs: typeof parsed.minDelayMs === 'number' ? parsed.minDelayMs : 1400,
       maxDelayMs: typeof parsed.maxDelayMs === 'number' ? parsed.maxDelayMs : 2800,
     };

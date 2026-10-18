@@ -1,13 +1,18 @@
-// Web Speech API Voice Synthesizer in Spanish
-// Official FIE Fencing Referee voice profile
-// Authoritative, crisp, 100% volume locked
+import { Capacitor } from '@capacitor/core';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
+// Dual-Engine Speech Synthesizer:
+// 1. Native Android / iOS: Uses @capacitor-community/text-to-speech with device speaker at 100% volume
+// 2. Web Browser / PWA: Uses Web Speech API (window.speechSynthesis)
 class SpeechEngine {
   private synth: SpeechSynthesis | null = null;
   private spanishVoice: SpeechSynthesisVoice | null = null;
   private availableSpanishVoices: SpeechSynthesisVoice[] = [];
+  private isNative: boolean = false;
+  private isSpeakingNative: boolean = false;
 
   constructor() {
+    this.isNative = Capacitor.isNativePlatform();
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       this.synth = window.speechSynthesis;
       this.loadVoices();
@@ -49,7 +54,6 @@ class SpeechEngine {
         'es-es-x-eea#male',
         'es-es-x-eef#male',
       ];
-
       const femaleKeywords = [
         'female',
         'mujer',
@@ -81,7 +85,6 @@ class SpeechEngine {
       const sorted = [...this.availableSpanishVoices].sort((a, b) => {
         const aName = a.name.toLowerCase();
         const bName = b.name.toLowerCase();
-
         const aIsMale = maleKeywords.some((k) => aName.includes(k));
         const bIsMale = maleKeywords.some((k) => bName.includes(k));
         const aIsFemale = femaleKeywords.some((k) => aName.includes(k));
@@ -110,6 +113,9 @@ class SpeechEngine {
   }
 
   public getCurrentVoiceName(): string {
+    if (this.isNative) {
+      return 'Altavoz Nativo Android (TextToSpeech FIE)';
+    }
     return this.spanishVoice
       ? `${this.spanishVoice.name} (Árbitro FIE Masculino)`
       : 'Árbitro Oficial FIE (Masculino)';
@@ -117,33 +123,72 @@ class SpeechEngine {
 
   /**
    * Speak command with official FIE referee pronunciation:
-   * Crisp, authoritative, masculine cadence, 100% volume locked.
-   * Strips out any "Allez" automatically.
+   * Uses native Android/iOS Text-to-Speech plugin if running in compiled APK/native app,
+   * with seamless fallback to Web Speech API in desktop/browser.
    */
-  public speak(
+  public async speak(
     text: string,
     rate: number = 1.15,
     pitch: number = 0.92,
     _volume: number = 1.0
-  ) {
-    if (!this.synth || !('SpeechSynthesisUtterance' in window)) return;
+  ): Promise<void> {
+    // Ensure "Allez" is never pronounced
+    const cleaned = text
+      .replace(/ ?allez!?/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!cleaned) return;
 
+    // 1. If running as compiled Android / iOS app via Capacitor:
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await TextToSpeech.stop().catch(() => {});
+        this.isSpeakingNative = true;
+
+        await TextToSpeech.speak({
+          text: cleaned,
+          lang: 'es-ES',
+          rate: Math.max(0.85, Math.min(1.45, rate)),
+          pitch: pitch || 0.92,
+          volume: 1.0,
+          category: 'ambient',
+        });
+        return;
+      } catch (nativeErr) {
+        console.warn('Native TextToSpeech failed, trying fallback:', nativeErr);
+        // Retry with generic 'es' if 'es-ES' wasn't recognized by device locale
+        try {
+          await TextToSpeech.speak({
+            text: cleaned,
+            lang: 'es',
+            rate: Math.max(0.85, Math.min(1.45, rate)),
+            pitch: pitch || 0.92,
+            volume: 1.0,
+            category: 'ambient',
+          });
+          return;
+        } catch (retryErr) {
+          console.warn('Native TextToSpeech generic fallback failed:', retryErr);
+        }
+      } finally {
+        this.isSpeakingNative = false;
+      }
+    }
+
+    // 2. Web Speech API for Browser / PWA:
+    this.speakWeb(cleaned, rate, pitch);
+  }
+
+  private speakWeb(cleaned: string, rate: number, pitch: number) {
+    if (!this.synth || !('SpeechSynthesisUtterance' in window)) return;
     try {
       this.synth.cancel();
 
-      // Ensure "Allez" is never pronounced
-      const cleaned = text
-        .replace(/¡?allez!?/gi, '')
-        .replace(/\s+/g, ' ')
-        .trim();
-
-      if (!cleaned) return;
-
       const utterance = new SpeechSynthesisUtterance(cleaned);
       utterance.lang = 'es-ES';
-      utterance.pitch = pitch || 0.92; // Firm, authoritative masculine pitch
+      utterance.pitch = pitch || 0.92;
       utterance.rate = Math.max(0.85, Math.min(1.45, rate));
-      utterance.volume = 1.0; // 100% volume locked
+      utterance.volume = 1.0;
 
       if (this.spanishVoice) {
         utterance.voice = this.spanishVoice;
@@ -156,7 +201,7 @@ class SpeechEngine {
 
       this.synth.speak(utterance);
     } catch (e) {
-      console.warn('Speech synthesis error:', e);
+      console.warn('Web speech synthesis error:', e);
     }
   }
 
@@ -165,12 +210,18 @@ class SpeechEngine {
   }
 
   public stop() {
+    if (Capacitor.isNativePlatform()) {
+      TextToSpeech.stop().catch(() => {});
+    }
     if (this.synth) {
       this.synth.cancel();
     }
   }
 
   public isAvailable(): boolean {
+    if (Capacitor.isNativePlatform()) {
+      return true;
+    }
     return typeof window !== 'undefined' && 'speechSynthesis' in window;
   }
 }

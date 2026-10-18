@@ -138,7 +138,6 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             {settings.workoutSpaceMeters.toFixed(1)} metros
           </span>
         </div>
-
         <input
           type="range"
           min="2.0"
@@ -148,7 +147,6 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           onChange={(e) => update('workoutSpaceMeters', parseFloat(e.target.value))}
           className="w-full accent-emerald-500 bg-zinc-800 rounded-lg cursor-pointer h-2.5"
         />
-
         {/* Presets */}
         <div className="grid grid-cols-4 gap-1.5 pt-1">
           {[
@@ -183,7 +181,6 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             {minDelaySec}s – {maxDelaySec}s (Aleatorio)
           </span>
         </div>
-
         <p className="text-[11px] text-zinc-300 leading-relaxed">
           En cada orden, el tiempo de pausa será un <strong>número aleatorio</strong> comprendido entre el valor mínimo y máximo que fijes en los deslizadores:
         </p>
@@ -399,7 +396,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Volume2 className="w-4 h-4 text-blue-400" />
-            <span className="text-sm font-bold text-white">Voz del Árbitro Oficial FIE</span>
+            <span className="text-sm font-bold text-white">Voz del árbitro Oficial FIE</span>
           </div>
           <button
             onClick={testVoice}
@@ -417,7 +414,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               Árbitro Oficial FIE Masculino (Español)
             </span>
             <span className="text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-800/40">
-              Volumen 100% · Solo Voz
+              Volumen 100% • Solo Voz
             </span>
           </div>
           <p className="text-[11px] text-zinc-300 leading-relaxed">
@@ -450,7 +447,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
       </div>
 
-      {/* 5. Mobile & Android Options (Cleaned: no haptic vibration) */}
+      {/* 5. Mobile & Android Options */}
       <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-4 space-y-3">
         <div className="flex items-center gap-2 mb-1">
           <Smartphone className="w-4 h-4 text-teal-400" />

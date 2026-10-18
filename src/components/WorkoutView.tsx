@@ -116,12 +116,10 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
   const triggerAudio = useCallback(
     (action: FootworkAction, isRecover: boolean = false) => {
       if (!soundEnabled) return;
-
       if (isRecover) {
         speechEngine.speak('¡A la guardia!', settings.speechRate, 0.92, 1.0);
         return;
       }
-
       speechEngine.speak(action.voiceText, settings.speechRate, 0.92, 1.0);
     },
     [soundEnabled, settings.speechRate]
@@ -146,7 +144,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
   // Step scheduling logic with generous time for multi-step actions and lunges
   const scheduleNextStep = useCallback(() => {
     if (!engineRef.current) return;
-
     actionIndexRef.current += 1;
     const plan = engineRef.current.getNextAction(
       actions,
@@ -154,7 +151,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
       coach,
       actionIndexRef.current
     );
-
     if (!plan) return;
 
     timerRef.current = setTimeout(() => {
@@ -192,7 +188,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
       // Check if lunge with recovery phase
       if (plan.action.isLunge) {
         setLungeCount((prev) => prev + 1);
-
         const approachStepsTime = isMultiStep ? Math.max(1200, baseExecutionTime - 1200) : 500;
 
         actionExecutionTimerRef.current = setTimeout(() => {
@@ -204,7 +199,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
               triggerAudio(plan.action, true);
             }
             setWorkoutState('recovering');
-
             const recoverDuration = settings.recoveryTimeMs ?? 1800;
             recoverTimerRef.current = setTimeout(() => {
               setWorkoutState('running');
@@ -224,7 +218,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
   // Handle bout countdowns (3 min bout & 1 min rest)
   useEffect(() => {
     if (!isBoutMode) return;
-
     let interval: NodeJS.Timeout | null = null;
 
     // During active fighting
@@ -234,7 +227,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
           if (prev <= 1) {
             // Period expired!
             clearAllTimers();
-
             if (currentPeriod < totalBoutPeriods) {
               // Rest period begins
               if (soundEnabled) {
@@ -267,7 +259,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
             // 10s warning
             speechEngine.speak('¡A la pista! Prepararse.', settings.speechRate, 0.92, 1.0);
           }
-
           if (prev <= 1) {
             // Rest ended, resume next period!
             setCurrentPeriod((p) => p + 1);
@@ -319,10 +310,8 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
     setCurrentPeriod(1);
     setBoutPeriodSecondsRemaining(180);
     setBoutRestSecondsRemaining(60);
-
     let count = settings.countdownSeconds || 3;
     setCountdown(count);
-
     const interval = setInterval(() => {
       count -= 1;
       if (count > 0) {
@@ -350,7 +339,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
 
   const handleStop = () => {
     clearAllTimers();
-
     onFinishWorkout({
       totalActions: actionCount,
       totalTimeSeconds: elapsedSeconds,
@@ -358,7 +346,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
       actionsBreakdown: actionHistoryStats,
       lungesCount: lungeCount,
     });
-
     setWorkoutState('idle');
     setCurrentAction(null);
     setActionCount(0);
@@ -370,7 +357,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
     setCurrentPeriod(1);
     setBoutPeriodSecondsRemaining(180);
     setBoutRestSecondsRemaining(60);
-
     if (engineRef.current) {
       engineRef.current.resetPosition();
       setCurrentPositionCm(engineRef.current.getPositionCm());
@@ -394,7 +380,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
         directionText: 'En Guardia',
       };
     }
-
     if (action.isLunge || action.category === 'lunge') {
       return {
         bg: 'from-rose-950 via-red-900/70 to-slate-950',
@@ -404,7 +389,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
         directionText: '¡Ataque / Fondo!',
       };
     }
-
     if (action.category === 'advance' || action.distanceCm > 0) {
       return {
         bg: 'from-emerald-950 via-teal-900/60 to-slate-950',
@@ -414,7 +398,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
         directionText: 'Hacia adelante',
       };
     }
-
     if (action.category === 'retreat' || action.distanceCm < 0) {
       return {
         bg: 'from-amber-950 via-orange-950/70 to-slate-950',
@@ -424,7 +407,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
         directionText: 'Hacia atrás',
       };
     }
-
     return {
       bg: 'from-indigo-950 via-purple-950/60 to-slate-950',
       border: 'border-purple-500/80 shadow-purple-950/40 shadow-xl',
@@ -511,13 +493,12 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
             <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center shadow-2xl shadow-emerald-950 mb-1">
               <Play className="w-8 h-8 text-black fill-current" />
             </div>
-
             <div>
               <h2 className="text-2xl font-black text-white tracking-tight mb-1">
                 Movimientos de pie
               </h2>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Pista: <strong className="text-zinc-200">{settings.workoutSpaceMeters}m</strong> · Ritmo:{' '}
+                Pista: <strong className="text-zinc-200">{settings.workoutSpaceMeters}m</strong> • Ritmo:{' '}
                 <strong className="text-emerald-400">
                   {(settings.minDelayMs / 1000).toFixed(1)}s - {(settings.maxDelayMs / 1000).toFixed(1)}s
                 </strong>
@@ -625,7 +606,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
               >
                 Ajustar acciones
               </button>
-              <span>·</span>
+              <span>•</span>
               <button
                 onClick={onGoToSettings}
                 className="hover:text-emerald-400 underline decoration-zinc-700 underline-offset-4 cursor-pointer"
@@ -656,19 +637,15 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
             <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-400 mb-3 shadow-lg">
               <Coffee className="w-8 h-8" />
             </div>
-
             <span className="text-xs font-black uppercase tracking-widest text-amber-400 mb-1">
               Descanso oficial entre periodos ({currentPeriod} de {totalBoutPeriods})
             </span>
-
             <div className="text-7xl font-black font-mono text-white tracking-tighter my-2 drop-shadow-[0_0_30px_rgba(245,158,11,0.5)]">
               {formatTime(boutRestSecondsRemaining)}
             </div>
-
             <p className="text-xs text-zinc-300 max-w-xs leading-relaxed mb-6">
               Respira hondo, hidrátate y prepara la estrategia para el siguiente periodo. El árbitro avisará a los 10 segundos.
             </p>
-
             <button
               onClick={handleSkipRest}
               className="w-full py-3.5 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-amber-950/60 transition cursor-pointer"
@@ -702,7 +679,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
             {workoutState === 'paused' && (
               <div className="absolute top-3 bg-amber-500 text-slate-950 font-black text-xs px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-1.5 animate-pulse">
                 <Pause className="w-3.5 h-3.5 fill-current" />
-                <span>Pausado — Toca para continuar</span>
+                <span>Pausado – Toca para continuar</span>
               </div>
             )}
             {workoutState === 'running' && (
@@ -761,12 +738,14 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
               {formatTime(elapsedSeconds)}
             </span>
           </div>
+
           <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-2.5 text-center">
             <span className="text-[10px] text-zinc-400 block font-medium">Acciones</span>
             <span className="text-base font-black font-mono text-blue-400 tracking-tight">
               {actionCount}
             </span>
           </div>
+
           <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-2.5 text-center">
             <span className="text-[10px] text-zinc-400 block font-medium">Fondos</span>
             <span className="text-base font-black font-mono text-rose-400 tracking-tight flex items-center justify-center gap-1">
@@ -774,6 +753,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
               {lungeCount}
             </span>
           </div>
+
           <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-2.5 text-center">
             <span className="text-[10px] text-zinc-400 block font-medium">Distancia</span>
             <span className="text-base font-black font-mono text-emerald-400 tracking-tight">
@@ -807,7 +787,6 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
               Pausar
             </button>
           )}
-
           <button
             onClick={handleStop}
             className="py-4 px-4 rounded-2xl bg-rose-600/90 hover:bg-rose-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-rose-950/50 transition cursor-pointer"

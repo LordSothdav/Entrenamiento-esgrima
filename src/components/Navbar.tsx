@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Maximize2, Minimize2, Volume2, VolumeX, Swords, HelpCircle } from 'lucide-react';
 import { PWAInstallButton } from './PWAInstallButton';
-import { soundEngine } from '../services/soundEngine';
 
 interface NavbarProps {
   soundEnabled: boolean;
@@ -43,11 +42,8 @@ export const Navbar: React.FC<NavbarProps> = ({ soundEnabled, onToggleSound, onO
           <Swords className="w-5 h-5 text-yellow-300 transform -rotate-12" />
         </div>
         <div>
-          <h1 className="text-base font-black tracking-tight text-white flex items-center gap-1.5">
+          <h1 className="text-base font-black tracking-tight text-white">
             Esgrima Footwork
-            <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30">
-              Pro
-            </span>
           </h1>
           <p className="text-[10px] text-zinc-400 font-medium">Entrenamiento móvil</p>
         </div>
@@ -55,7 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({ soundEnabled, onToggleSound, onO
 
       <div className="flex items-center gap-1.5">
         <PWAInstallButton compact={true} />
-
         <button
           onClick={handleTestSound}
           title={soundEnabled ? "Silenciar audio" : "Activar audio"}
@@ -67,7 +62,6 @@ export const Navbar: React.FC<NavbarProps> = ({ soundEnabled, onToggleSound, onO
         >
           {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
         </button>
-
         <button
           onClick={onOpenHelp}
           title="Ayuda y guía"
@@ -75,7 +69,6 @@ export const Navbar: React.FC<NavbarProps> = ({ soundEnabled, onToggleSound, onO
         >
           <HelpCircle className="w-4 h-4" />
         </button>
-
         <button
           onClick={toggleFullscreen}
           title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}

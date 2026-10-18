@@ -37,7 +37,6 @@ export const ActionsEditorView: React.FC<ActionsEditorViewProps> = ({
   onAddAction,
   onDeleteAction,
   onRestoreDefaults,
-  soundVolume,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [expandedActionId, setExpandedActionId] = useState<string | null>(null);
@@ -50,7 +49,7 @@ export const ActionsEditorView: React.FC<ActionsEditorViewProps> = ({
   const [newDistanceCm, setNewDistanceCm] = useState<number>(70);
   const [newTimeToPerformMs, setNewTimeToPerformMs] = useState<number>(900);
   const [newFrequencyWeight, setNewFrequencyWeight] = useState<number>(6);
-  const [newSoundCue, setNewSoundCue] = useState<string>('advance');
+  const [newSoundCue] = useState<string>('advance');
   const [newCoachAlsoSpeaks, setNewCoachAlsoSpeaks] = useState<boolean>(true);
 
   const categories: { id: string; label: string }[] = [
@@ -110,6 +109,7 @@ export const ActionsEditorView: React.FC<ActionsEditorViewProps> = ({
 
     onAddAction(created);
     setShowAddModal(false);
+
     // Reset form
     setNewDisplayName('');
     setNewVoiceText('');
@@ -241,14 +241,13 @@ export const ActionsEditorView: React.FC<ActionsEditorViewProps> = ({
                           </span>
                         )}
                       </div>
-
                       <div className="flex items-center gap-2 text-[11px] text-zinc-400 font-mono">
                         <span className={action.distanceCm > 0 ? 'text-emerald-400 font-semibold' : action.distanceCm < 0 ? 'text-amber-400 font-semibold' : 'text-zinc-400'}>
                           {action.distanceCm > 0 ? `+${action.distanceCm} cm` : `${action.distanceCm} cm`}
                         </span>
-                        <span>·</span>
+                        <span>•</span>
                         <span>{action.timeToPerformMs} ms</span>
-                        <span>·</span>
+                        <span>•</span>
                         <span className="text-blue-400">Freq {action.frequencyWeight}x</span>
                       </div>
                     </div>

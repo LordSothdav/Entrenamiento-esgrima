@@ -75,6 +75,7 @@ export const PWAInstallButton: React.FC<{ compact?: boolean }> = ({ compact = fa
                   <X className="w-5 h-5" />
                 </button>
               </div>
+
               <ol className="space-y-3 text-sm text-slate-300">
                 <li className="flex items-start gap-2.5">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600/30 text-blue-400 font-bold flex items-center justify-center text-xs">
@@ -95,6 +96,7 @@ export const PWAInstallButton: React.FC<{ compact?: boolean }> = ({ compact = fa
                   <span>¡Listo! Se abrirá como una aplicación nativa a pantalla completa y sin barras del navegador.</span>
                 </li>
               </ol>
+
               <button
                 onClick={() => setShowIOSGuide(false)}
                 className="mt-5 w-full rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 transition"

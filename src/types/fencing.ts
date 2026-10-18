@@ -1,7 +1,5 @@
 export type ActionCategory = 'advance' | 'retreat' | 'lunge' | 'combination' | 'custom';
-
 export type ReactionIntervalMode = 'quick' | 'medium' | 'long' | 'custom';
-
 export type AudioMode = 'voice' | 'beep' | 'both' | 'silent';
 
 export interface FootworkAction {

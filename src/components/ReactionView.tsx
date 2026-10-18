@@ -157,10 +157,8 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
         const pool = available.length > 0 ? available : list;
         selected.push(pool[Math.floor(Math.random() * pool.length)]);
       }
-
       const spokenWords = selected.map((n) => getWord(n)).join(', ');
       const capSpoken = spokenWords.charAt(0).toUpperCase() + spokenWords.slice(1);
-
       return {
         type: 'combination',
         numbers: selected,
@@ -179,7 +177,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
       const others = list.filter((n) => n !== feintTarget);
       hitTarget = others[Math.floor(Math.random() * others.length)];
     }
-
     const feintWord = getWord(feintTarget);
     const hitWord = getWord(hitTarget);
     const isSameTarget = feintTarget === hitTarget;
@@ -214,9 +211,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
       lastSignalRef.current = nextSignal.spokenText;
       setCurrentSignal(nextSignal);
       setReactionsCount((prev) => prev + 1);
-
       triggerReactionSignal(nextSignal);
-
       // Continue loop
       scheduleNextReaction();
     }, delayMs);
@@ -227,7 +222,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
     setReactionState('countdown');
     let count = 3;
     setCountdown(count);
-
     const interval = setInterval(() => {
       count -= 1;
       if (count > 0) {
@@ -317,7 +311,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
             Entrenamiento de Plastron
           </h2>
           <p className="text-xs text-zinc-400">
-            Voz del árbitro FIE · Combinaciones de toques y fintas · Solo voz
+            Voz del árbitro FIE • Combinaciones de toques y fintas • Solo voz
           </p>
         </div>
         {reactionState === 'idle' && (
@@ -468,7 +462,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
             {/* Plastron guide tip */}
             <p className="text-[11px] text-zinc-400 bg-black/60 p-2.5 rounded-xl border border-zinc-850 leading-relaxed">
               💡 <strong>Dianas en Plastron:</strong> Asigna cada número a un blanco de tu plastron o muñeco:<br />
-              <span className="text-zinc-300">1 = Pecho alto · 2 = Flanco bajo · 3 = Máscara · 4 = Brazo avanzado</span>
+              <span className="text-zinc-300">1 = Pecho alto • 2 = Flanco bajo • 3 = Máscara • 4 = Brazo avanzado</span>
             </p>
           </div>
 
@@ -574,7 +568,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
             <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-yellow-500 to-amber-600 flex items-center justify-center shadow-2xl shadow-yellow-950 mb-4">
               <Zap className="w-10 h-10 text-black fill-current" />
             </div>
-
             <h3 className="text-xl font-black text-white tracking-tight mb-1">
               Entrenamiento de Plastron
             </h3>
@@ -588,7 +581,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
               </strong>{' '}
               entre <strong>{minSec}s</strong> y <strong>{maxSec}s</strong>.
             </p>
-
             <button
               onClick={handleStart}
               className="w-full py-4 rounded-2xl font-black text-lg tracking-wide uppercase bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 active:scale-98 text-black shadow-xl shadow-yellow-950/60 flex items-center justify-center gap-3 transition cursor-pointer"
@@ -624,7 +616,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
           >
             {/* Tap to Pause / Resume Hint */}
             <div className="absolute top-3 text-[11px] font-bold uppercase tracking-wider text-zinc-400 bg-black/80 px-3 py-1 rounded-full border border-zinc-800">
-              {reactionState === 'paused' ? '⏸️ En pausa — Toca para reanudar' : 'Toca la tarjeta para pausar'}
+              {reactionState === 'paused' ? '⏸ En pausa – Toca para reanudar' : 'Toca la tarjeta para pausar'}
             </div>
 
             {/* Signal Tag */}
@@ -702,7 +694,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
                       </div>
                     </div>
                   </div>
-
                   <span className="text-2xl font-black text-white mt-3 tracking-wide">
                     {currentSignal.spokenText}
                   </span>
@@ -762,7 +753,6 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
               Pausar
             </button>
           )}
-
           <button
             onClick={handleStop}
             className="py-4 px-4 rounded-2xl bg-rose-600/90 hover:bg-rose-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2 shadow-xl shadow-rose-950/50 transition cursor-pointer"

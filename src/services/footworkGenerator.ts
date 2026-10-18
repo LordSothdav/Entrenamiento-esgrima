@@ -53,17 +53,14 @@ export class FootworkEngine {
     if (active.length === 0) {
       return { valid: false, error: 'No hay ninguna acción activada. Activa al menos dos acciones.' };
     }
-
     const hasForward = active.some((a) => a.distanceCm > 0);
     const hasBackward = active.some((a) => a.distanceCm < 0);
-
     if (!hasForward || !hasBackward) {
       return {
         valid: false,
         error: 'Se requiere al menos una acción hacia adelante y una hacia atrás para entrenar en la pista.',
       };
     }
-
     return { valid: true };
   }
 
@@ -85,7 +82,6 @@ export class FootworkEngine {
     let candidates = active.filter((a) => {
       // Avoid 2 consecutive pure lunges in standard footwork unless space is huge
       if (a.isLunge && this.consecutiveLunges >= 1) return false;
-
       const targetPos = this.currentPositionCm + a.distanceCm;
       return targetPos >= minCm && targetPos <= maxCm;
     });

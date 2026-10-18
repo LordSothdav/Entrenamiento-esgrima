@@ -26,7 +26,7 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ stats, onClose, onRe
     return `${m}m ${s.toString().padStart(2, '0')}s`;
   };
 
-  // Estimated calories: ~6 kcal/min for intense fencing footwork
+  // Estimated calories: ~6.5 kcal/min for intense fencing footwork
   const caloriesBurned = Math.round((stats.totalTimeSeconds / 60) * 6.5);
 
   return (

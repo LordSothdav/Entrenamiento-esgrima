@@ -24,7 +24,7 @@ export const OfflineIndicator: React.FC = () => {
   return (
     <div className="fixed bottom-20 left-4 right-4 z-50 flex items-center justify-center gap-2 rounded-xl bg-amber-500/90 text-slate-950 px-4 py-2 text-xs font-semibold shadow-lg backdrop-blur-md">
       <WifiOff className="w-4 h-4" />
-      <span>Modo sin conexión activo — Todas las funciones de entrenamiento funcionan 100% offline.</span>
+      <span>Modo sin conexión activo – Todas las funciones de entrenamiento funcionan 100% offline.</span>
     </div>
   );
 };

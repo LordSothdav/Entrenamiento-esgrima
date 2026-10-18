@@ -1,5 +1,5 @@
 import React from 'react';
-import { HelpCircle, Smartphone, Shield, Swords, Ruler, Volume2, CheckCircle2, Zap, Pause, Plus } from 'lucide-react';
+import { Smartphone, Shield, Swords, Ruler, CheckCircle2, Zap, Plus } from 'lucide-react';
 import { PWAInstallButton } from './PWAInstallButton';
 
 export const HelpModal: React.FC = () => {
@@ -36,7 +36,7 @@ export const HelpModal: React.FC = () => {
         <ul className="space-y-1.5 text-xs text-zinc-300 pl-1">
           <li className="flex items-start gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-            <span>Presiona el botón verde <strong>"Instalar en Android"</strong> o el menú de tres puntos (⋮) de Google Chrome y pulsa <strong>"Instalar aplicación"</strong> o <strong>"Añadir a la pantalla de inicio"</strong>.</span>
+            <span>Presiona el botón verde <strong>"Instalar en Android"</strong> o el menú de tres puntos de Google Chrome y pulsa <strong>"Instalar aplicación"</strong> o <strong>"Añadir a la pantalla de inicio"</strong>.</span>
           </li>
           <li className="flex items-start gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />

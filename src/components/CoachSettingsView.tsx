@@ -5,7 +5,6 @@ import {
   Sparkles,
   Volume2,
   RotateCcw,
-  Check,
   Plus,
   Trash2,
   X,
@@ -25,7 +24,6 @@ export const CoachSettingsView: React.FC<CoachSettingsViewProps> = ({
   coach,
   onUpdateCoach,
   onRestoreDefaults,
-  soundVolume,
 }) => {
   const [showAddTipModal, setShowAddTipModal] = useState<boolean>(false);
   const [newTipText, setNewTipText] = useState<string>('');
@@ -187,7 +185,6 @@ export const CoachSettingsView: React.FC<CoachSettingsViewProps> = ({
             <Sparkles className="w-3.5 h-3.5" />
             Tus frases personalizadas ({coach.customTips.length})
           </h3>
-
           {coach.customTips.map((tip) => (
             <div
               key={tip.id}
@@ -211,7 +208,6 @@ export const CoachSettingsView: React.FC<CoachSettingsViewProps> = ({
                     <span className="text-[10px] text-yellow-300 font-medium">Frase personalizada</span>
                   </div>
                 </label>
-
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => testTip(tip.text)}
@@ -239,7 +235,6 @@ export const CoachSettingsView: React.FC<CoachSettingsViewProps> = ({
         <h3 className="text-xs uppercase font-extrabold tracking-wider text-zinc-400 px-1">
           Consejos técnicos básicos de esgrima
         </h3>
-
         {tipsList.map((item) => {
           const isChecked = !!coach[item.key];
           return (
@@ -268,7 +263,6 @@ export const CoachSettingsView: React.FC<CoachSettingsViewProps> = ({
                     </span>
                   </div>
                 </label>
-
                 <button
                   onClick={() => testTip(item.cue)}
                   title="Escuchar consejo"
