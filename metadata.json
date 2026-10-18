@@ -1,0 +1,8 @@
+{
+  "name": "Esgrima Footwork",
+  "description": "Aplicación de entrenamiento de desplazamientos de esgrima en casa para móvil y Android, con control de pista, entrenador virtual y comandos en español.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

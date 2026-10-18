@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Esgrima Footwork</string>
+    <string name="title_activity_main">Esgrima Footwork</string>
+    <string name="package_name">com.lordsoth.esgrimafootwork</string>
+    <string name="custom_url_scheme">com.lordsoth.esgrimafootwork</string>
+</resources>
