@@ -19,6 +19,7 @@ interface ReactionViewProps {
   settings: ReactionSettings;
   onUpdateSettings: (newSettings: ReactionSettings) => void;
   soundEnabled: boolean;
+  onActiveStateChange?: (isActive: boolean) => void;
 }
 
 type ReactionState = 'idle' | 'countdown' | 'running' | 'paused';
@@ -53,6 +54,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
   settings,
   onUpdateSettings,
   soundEnabled,
+  onActiveStateChange,
 }) => {
   const [reactionState, setReactionState] = useState<ReactionState>('idle');
   const [countdown, setCountdown] = useState<number>(3);
@@ -63,6 +65,11 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const lastSignalRef = useRef<string | null>(null);
+
+  // Notify parent when plastron is running/paused
+  useEffect(() => {
+    onActiveStateChange?.(reactionState !== 'idle');
+  }, [reactionState, onActiveStateChange]);
 
   const plastronMode: PlastronCallMode = settings.plastronMode || 'mixed';
   const combinationMax: number = settings.combinationMaxNumbers || 3;
@@ -300,7 +307,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
   const maxSec = (settings.maxDelayMs / 1000).toFixed(1);
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-8.5rem)] justify-between pb-4">
+    <div className={`flex flex-col justify-between ${reactionState === 'idle' ? 'min-h-[calc(100vh-8.5rem)] pb-24' : 'h-[calc(100dvh-5.2rem)] pb-safe overflow-hidden'}`}>
 
       {/* Configuration Drawer (When in idle) */}
       {reactionState === 'idle' && (
@@ -585,11 +592,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
         {(reactionState === 'running' || reactionState === 'paused') && (
           <div
             onClick={() => (reactionState === 'paused' ? handleResume() : handlePause())}
-            className={`w-full rounded-3xl bg-gradient-to-b from-zinc-950 via-black to-zinc-950 border-2 p-6 sm:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-200 min-h-[330px] shadow-2xl cursor-pointer select-none ${
-              reactionState === 'paused'
-                ? 'border-amber-500/80 shadow-amber-950/60'
-                : 'border-yellow-500/60 shadow-yellow-950/40'
-            }`}
+            className={`w-full rounded-3xl bg-gradient-to-b from-zinc-950 via-black to-zinc-950 border-2 p-5 sm:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-200 flex-1 min-h-0 shadow-2xl cursor-pointer select-none`}
           >
             {/* Tap to Pause / Resume Hint */}
             <div className="absolute top-3 text-[11px] font-bold uppercase tracking-wider text-zinc-400 bg-black/80 px-3 py-1 rounded-full border border-zinc-800">
@@ -712,11 +715,11 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
 
       {/* Control Buttons: PAUSE & STOP */}
       {(reactionState === 'running' || reactionState === 'paused') && (
-        <div className="grid grid-cols-2 gap-3 pt-1">
+        <div className="grid grid-cols-2 gap-3 pt-1 pb-safe shrink-0">
           {reactionState === 'paused' ? (
             <button
               onClick={handleResume}
-              className="py-4 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2 shadow-xl shadow-emerald-950/50 transition cursor-pointer"
+              className="py-3.5 sm:py-4 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2 shadow-xl shadow-emerald-950/50 transition cursor-pointer"
             >
               <Play className="w-6 h-6 fill-current" />
               Reanudar
@@ -724,7 +727,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
           ) : (
             <button
               onClick={handlePause}
-              className="py-4 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 active:scale-98 text-slate-950 font-black text-base flex items-center justify-center gap-2 shadow-xl shadow-amber-950/50 transition cursor-pointer"
+              className="py-3.5 sm:py-4 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 active:scale-98 text-slate-950 font-black text-base flex items-center justify-center gap-2 shadow-xl shadow-amber-950/50 transition cursor-pointer"
             >
               <Pause className="w-6 h-6 fill-current" />
               Pausar
@@ -732,7 +735,7 @@ export const ReactionView: React.FC<ReactionViewProps> = ({
           )}
           <button
             onClick={handleStop}
-            className="py-4 px-4 rounded-2xl bg-rose-600/90 hover:bg-rose-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2 shadow-xl shadow-rose-950/50 transition cursor-pointer"
+            className="py-3.5 sm:py-4 px-4 rounded-2xl bg-rose-600/90 hover:bg-rose-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2 shadow-xl shadow-rose-950/50 transition cursor-pointer"
           >
             <Square className="w-6 h-6 fill-current" />
             Finalizar

@@ -43,7 +43,7 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState<NavTab>((initialUI.currentTab as NavTab) || 'workout');
   const [completedStats, setCompletedStats] = useState<WorkoutStats | null>(null);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(initialUI.soundEnabled);
-  const [isWorkoutActive, setIsWorkoutActive] = useState<boolean>(false);
+  const [isExerciseActive, setIsExerciseActive] = useState<boolean>(false);
 
   // Keep screen awake during workout if setting is active
   useWakeLock(settings.keepScreenAwake);
@@ -113,7 +113,7 @@ export default function App() {
 
   const handleFinishWorkout = (stats: WorkoutStats) => {
     setCompletedStats(stats);
-    setIsWorkoutActive(false);
+    setIsExerciseActive(false);
   };
 
   return (
@@ -131,7 +131,7 @@ export default function App() {
         />
 
         {/* Dynamic Tab Body */}
-        <main className="flex-1 px-3.5 pt-2">
+        <main className={`flex-1 px-3.5 pt-2 ${isExerciseActive ? 'flex flex-col overflow-hidden pb-safe' : ''}`}>
           {currentTab === 'workout' && (
             <WorkoutView
               actions={actions}
@@ -140,6 +140,7 @@ export default function App() {
               soundEnabled={soundEnabled}
               onUpdateSettings={handleUpdateSettings}
               onFinishWorkout={handleFinishWorkout}
+              onActiveStateChange={setIsExerciseActive}
               onGoToActions={() => handleSelectTab('actions')}
               onGoToSettings={() => handleSelectTab('settings')}
             />
@@ -150,6 +151,7 @@ export default function App() {
               settings={reactionSettings}
               onUpdateSettings={handleUpdateReaction}
               soundEnabled={soundEnabled}
+              onActiveStateChange={setIsExerciseActive}
             />
           )}
 
@@ -184,12 +186,14 @@ export default function App() {
           {currentTab === 'help' && <HelpModal />}
         </main>
 
-        {/* Android Bottom Navigation */}
-        <BottomNav
-          currentTab={currentTab}
-          onSelectTab={handleSelectTab}
-          isWorkoutRunning={isWorkoutActive}
-        />
+        {/* Android Bottom Navigation (Hidden during active exercise to ensure buttons are never cut off) */}
+        {!isExerciseActive && (
+          <BottomNav
+            currentTab={currentTab}
+            onSelectTab={handleSelectTab}
+            isWorkoutRunning={isExerciseActive}
+          />
+        )}
       </div>
 
       {/* Workout Summary Modal */}

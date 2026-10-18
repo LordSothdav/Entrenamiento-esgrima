@@ -30,6 +30,7 @@ interface WorkoutViewProps {
   onGoToSettings: () => void;
   soundEnabled: boolean;
   onUpdateSettings?: (newSettings: WorkoutSettings) => void;
+  onActiveStateChange?: (isActive: boolean) => void;
 }
 
 type WorkoutState = 'idle' | 'countdown' | 'running' | 'paused' | 'holding_lunge' | 'recovering' | 'bout_rest';
@@ -43,6 +44,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
   onGoToSettings,
   soundEnabled,
   onUpdateSettings,
+  onActiveStateChange,
 }) => {
   const [workoutState, setWorkoutState] = useState<WorkoutState>('idle');
   const [countdown, setCountdown] = useState<number>(settings.countdownSeconds || 3);
@@ -83,6 +85,11 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
     engineRef.current = new FootworkEngine(settings.workoutSpaceMeters);
     setCurrentPositionCm(engineRef.current.getPositionCm());
   }, [settings.workoutSpaceMeters]);
+
+  // Notify parent if workout is actively in progress
+  useEffect(() => {
+    onActiveStateChange?.(workoutState !== 'idle');
+  }, [workoutState, onActiveStateChange]);
 
   // Overall session elapsed timer
   useEffect(() => {
@@ -419,7 +426,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
   const theme = getActionTheme(currentAction);
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-8.5rem)] justify-between pb-4">
+    <div className={`flex flex-col justify-between ${workoutState === 'idle' ? 'min-h-[calc(100vh-8.5rem)] pb-24' : 'h-[calc(100dvh-5.2rem)] pb-safe overflow-hidden'}`}>
       {/* Top Strip Position Bar */}
       <div className="pt-2">
         <StripPositionBar
@@ -662,7 +669,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
           workoutState === 'paused') && (
           <div
             onClick={() => (workoutState === 'paused' ? handleResume() : handlePause())}
-            className={`w-full rounded-3xl bg-gradient-to-b ${theme.bg} border-2 ${theme.border} p-6 flex flex-col items-center justify-between text-center relative overflow-hidden transition-all duration-300 min-h-[300px] shadow-2xl cursor-pointer select-none`}
+            className={`w-full rounded-3xl bg-gradient-to-b ${theme.bg} border-2 ${theme.border} p-4 sm:p-6 flex flex-col items-center justify-between text-center relative overflow-hidden transition-all duration-300 flex-1 min-h-0 shadow-2xl cursor-pointer select-none`}
             title="Toca para pausar o reanudar"
           >
             {/* Lunge holding badge indicator */}
@@ -769,11 +776,11 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
         workoutState === 'recovering' ||
         workoutState === 'paused' ||
         workoutState === 'bout_rest') && (
-        <div className="grid grid-cols-2 gap-3 pt-1">
+        <div className="grid grid-cols-2 gap-3 pt-1 pb-safe shrink-0">
           {workoutState === 'paused' ? (
             <button
               onClick={handleResume}
-              className="py-4 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-emerald-950/50 transition cursor-pointer"
+              className="py-3.5 sm:py-4 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-emerald-950/50 transition cursor-pointer"
             >
               <Play className="w-6 h-6 fill-current" />
               Reanudar
@@ -781,7 +788,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
           ) : (
             <button
               onClick={handlePause}
-              className="py-4 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 active:scale-98 text-slate-950 font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-amber-950/50 transition cursor-pointer"
+              className="py-3.5 sm:py-4 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 active:scale-98 text-slate-950 font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-amber-950/50 transition cursor-pointer"
             >
               <Pause className="w-6 h-6 fill-current" />
               Pausar
@@ -789,7 +796,7 @@ export const WorkoutView: React.FC<WorkoutViewProps> = ({
           )}
           <button
             onClick={handleStop}
-            className="py-4 px-4 rounded-2xl bg-rose-600/90 hover:bg-rose-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-rose-950/50 transition cursor-pointer"
+            className="py-3.5 sm:py-4 px-4 rounded-2xl bg-rose-600/90 hover:bg-rose-500 active:scale-98 text-white font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-rose-950/50 transition cursor-pointer"
           >
             <Square className="w-6 h-6 fill-current" />
             Finalizar Sesión
